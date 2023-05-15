@@ -69,18 +69,6 @@ export default {
             const randomDeck = shuffleDeckRandomly();
             this.setNewRound();
 
-            randomDeck.forEach(card => {
-                if (card.value === "J" || card.value === "Q" || card.value === "K") {
-                    this.deckOfCards.push({ ...card, score: 10 })
-                }
-                else if (card.value === "A") {
-                    this.deckOfCards.push({ ...card, score: 11 })
-                }
-                else {
-                    this.deckOfCards.push({ ...card, score: Number(card.value) })
-                }
-            });
-
             for (let i = 0; i < 2; i++) {
                 this.myCards.push(this.deckOfCards[0]);
                 this.myScore += this.deckOfCards[0].score;
@@ -98,12 +86,33 @@ export default {
         },
 
         hit() {
-
+            if (this.myCards.length === 0) {
+                this.setDeck();
+                return;
+            }
+            this.myCards.push(this.deckOfCards[0]);
+            this.myScore += this.deckOfCards[0].score;
+            this.deckOfCards.shift();
+            this.findWinner();
         },
 
         stay() {
             this.isMyTurn = false;
-
+            if (this.hideOpponentFirstCard) {
+                this.opponentScore += this.opponentCards[0].score;
+            }
+            this.hideOpponentFirstCard = false;
+            this.findWinner();
+            this.drawDialog = this.isDraw;
+            if (!this.winner && !this.isDraw) {
+                do {
+                    this.opponentCards.push(this.deckOfCards[0]);
+                    this.opponentScore += this.deckOfCards[0].score;
+                    this.deckOfCards.shift();
+                    this.findWinner();
+                } while (this.opponentScore <= this.myScore && this.winner === null);
+                this.isMyTurn = true;
+            }
         },
 
         setNewRound() {
