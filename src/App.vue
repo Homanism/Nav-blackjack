@@ -1,6 +1,6 @@
 <template>
     <v-app>
-<h1>Hello Nav!</h1>
+        <AppBar :is-my-turn="isMyTurn" :my-score="myScore" :opponent-score="opponentScore" />
     </v-app>
 </template>
 
