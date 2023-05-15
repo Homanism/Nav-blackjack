@@ -6,7 +6,7 @@
             <div v-if="!winner">
                 <div class="game-proccess">
                     <div class="game-proccess-block">
-                        <p>You</p><br><br>
+                        <p>You</p><br>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in myCards" :key="index" :card-data="card" />
                         </div>
@@ -19,6 +19,14 @@
                                 :hide-card="index === 0 && hideOpponentFirstCard" />
                         </div>
                     </div>
+                    
+                </div>
+                <div class="game-control-btns" v-if="myCards.length > 0">
+                    <v-btn color="red" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
+                    <v-btn color="red" class="ml-2" @click="stay">Stay</v-btn>
+                </div>
+                <div class="game-control-btns" v-else>
+                    <v-btn color="red" depressed dark @click="hit">Deal</v-btn>
                 </div>
                 <div class="game-proccess">
                     <div class="game-proccess-block">
@@ -29,13 +37,7 @@
                         <h1 >Magnus score: {{ opponentScore }}</h1><br><br><br>
                     </div>
                 </div>
-                <div class="game-control-btns" v-if="myCards.length > 0">
-                    <v-btn color="red" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
-                    <v-btn color="red" class="ml-2" @click="stay">Stay</v-btn>
-                </div>
-                <div class="game-control-btns" v-else>
-                    <v-btn color="red" depressed dark @click="hit">Deal</v-btn>
-                </div>
+
             </div>
             <GameResult v-if="winner" :winner="winner" :is-blackjack="isBlackjack" :myCards="myCards"
                 :opponentCards="opponentCards" :myScore="myScore" :opponentScore="opponentScore"
@@ -66,7 +68,6 @@
 import AppBar from './components/AppBar.vue';
 import GameCard from './components/GameCard.vue';
 import GameResult from './components/GameResult.vue';
-import shuffleDeckRandomly from './helper/shuffleDeckRandomly.js';
 import axios from 'axios'
 
 export default {
@@ -88,12 +89,13 @@ export default {
         winner: null,
         hideOpponentFirstCard: true,
         drawDialog: false,
-        isBlackjack: false
+        isBlackjack: false,
+        shuf: {}
     }),
 
     methods: {
         setDeck() {
-            const randomDeck = shuffleDeckRandomly();
+            const randomDeck = this.shuf
             this.setNewRound();
 
             randomDeck.forEach(card => {
@@ -193,6 +195,7 @@ export default {
 
     async mounted() {
         const response = await axios.get("https://blackjack.ekstern.dev.nav.no/shuffle");
+        this.shuf= response.data
         console.log(response)
     },
 
@@ -225,7 +228,7 @@ p{
 }
 
 #app {
-  background: url('https://www.shutterstock.com/image-vector/black-jack-table-background-green-260nw-1937358541.jpg')
+  background: url('https://t4.ftcdn.net/jpg/04/20/86/73/360_F_420867335_srDH3p52ShctnCgpD6XPbdYUR1T0TB9B.jpg')
   /* background: url('@/assets/bj.jpg') */
     no-repeat center center ;
   background-size: cover;
