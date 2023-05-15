@@ -40,7 +40,7 @@
                 <div v-if="winner==='opponent' && isBlackjack" class="blackjack">BLACKJACK <v-icon right color="green">mdi-thumb-up</v-icon></div>
             </div>
         </div>
-        <v-btn color="green" dark class="mt-5" @click="$emit('startNewRound')">New Round</v-btn>
+        <v-btn color="red" dark class="mt-5" @click="$emit('startNewRound')">New Round</v-btn>
     </div>
 </template>
 

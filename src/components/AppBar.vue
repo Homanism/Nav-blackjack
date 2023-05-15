@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar app color="primary" dark height="80px">
+    <v-app-bar app color="#0B6623" dark height="80px">
         <div class="d-flex align-center">
             <v-img alt="Game Logo" class="shrink mr-2" contain src="../assets/blackjack-logo.png"
                 transition="scale-transition" width="40" />
@@ -12,7 +12,7 @@
 
             <div class="ml-10 d-flex">
                 <div>
-                    <v-chip label :disabled="!isMyTurn" class="ma-2" color="orange" text-color="white">
+                    <v-chip label :disabled="!isMyTurn" class="ma-2" color="red" text-color="white">
                         <v-icon left>
                             mdi-account-circle-outline
                         </v-icon>
@@ -20,7 +20,7 @@
                     </v-chip>
                 </div>
                 <div>
-                    <v-chip label :disabled="isMyTurn" class="ma-2" color="orange" text-color="white">
+                    <v-chip label :disabled="isMyTurn" class="ma-2" color="red" text-color="white">
                         <v-icon left>
                             mdi-account-circle-outline
                         </v-icon>

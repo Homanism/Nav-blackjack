@@ -23,11 +23,11 @@
                     </div>
                 </div>
                 <div class="game-control-btns" v-if="myCards.length > 0">
-                    <v-btn color="info" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
-                    <v-btn color="info" class="ml-2" @click="stay">Stay</v-btn>
+                    <v-btn color="red" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
+                    <v-btn color="red" class="ml-2" @click="stay">Stay</v-btn>
                 </div>
                 <div class="game-control-btns" v-else>
-                    <v-btn color="orange" depressed dark @click="hit">Deal</v-btn>
+                    <v-btn color="red" depressed dark @click="hit">Deal</v-btn>
                 </div>
             </div>
             <GameResult v-if="winner" :winner="winner" :is-blackjack="isBlackjack" :myCards="myCards"
@@ -44,7 +44,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn color="green" dark depressed @click="closeDrawDialog">
+                    <v-btn color="red" dark depressed @click="closeDrawDialog">
                         New Round
                     </v-btn>
 
