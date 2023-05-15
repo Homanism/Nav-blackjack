@@ -13,8 +13,8 @@
             <div class="participant-wrapper">
                 <h2>
                     You 
-                    <v-icon right color="success" v-if="winner === 'i'">
-                        mdi-checkbox-marked-circle
+                    <v-icon right size="55" color="orange" v-if="winner === 'i'">
+                        mdi-crown
                     </v-icon>
                 </h2>
                 <span>Score: {{ myScore }}</span>
@@ -22,14 +22,14 @@
                     <GameCard v-for="(card, index) in myCards" :key="index" :card-data="card" openedCard
                         style="margin: 5px !important" />
                 </div>
-                <div v-if="winner==='i' && isBlackjack" class="blackjack">BLACKJACK <v-icon right color="green">mdi-thumb-up</v-icon></div>
+                <div v-if="winner==='i' && isBlackjack" class="blackjack">BLACKJACK <v-icon right color="red">mdi-thumb-up</v-icon></div>
             </div>
             <v-divider vertical></v-divider>
             <div class="participant-wrapper">
                 <h2>
                     Magnus
-                    <v-icon right color="success" v-if="winner === 'opponent'">
-                        mdi-checkbox-marked-circle
+                    <v-icon right size="55" color="orange" v-if="winner === 'opponent'">
+                        mdi-crown
                     </v-icon>
                 </h2>
                 <span>Score: {{ opponentScore }}</span>
@@ -37,7 +37,7 @@
                     <GameCard v-for="(card, index) in opponentCards" :key="index" :card-data="card" openedCard
                         style="margin: 5px !important" />
                 </div>
-                <div v-if="winner==='opponent' && isBlackjack" class="blackjack">BLACKJACK <v-icon right color="green">mdi-thumb-up</v-icon></div>
+                <div v-if="winner==='opponent' && isBlackjack" class="blackjack">BLACKJACK <v-icon right color="red">mdi-thumb-up</v-icon></div>
             </div>
         </div>
         <v-btn color="red" dark class="mt-5" @click="$emit('startNewRound')">New Round</v-btn>
@@ -79,8 +79,8 @@ export default {
 
 .container .winner-text .winner-text-wrapper span {
     font-weight: bold;
-    font-size: 22px;
-    color: green;
+    font-size: 45px;
+    color: rgb(255, 174, 0);
 }
 
 .container .participants {
@@ -97,8 +97,8 @@ export default {
 }
 
 .container .participants .participant-wrapper span {
-    font-size: 18px;
-    color: blue;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
 }
 
 .container .participants .participant-wrapper .participant-cards {
@@ -110,7 +110,7 @@ export default {
     font-weight: bold;
     font-size: 32px;
     margin-top: 32px;
-    color: green;
+    color: red;
     display: flex;
     align-items: center;
 }

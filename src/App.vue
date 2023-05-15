@@ -6,14 +6,15 @@
             <div v-if="!winner">
                 <div class="game-proccess">
                     <div class="game-proccess-block">
-                        <p>You</p><br>
+                        
+                        <p><v-icon size="55">mdi-account-check</v-icon> You</p><br>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in myCards" :key="index" :card-data="card" />
                         </div>
                     </div>
                     <v-divider vertical></v-divider>
                     <div class="game-proccess-block">
-                        <p>Magnus</p><br>
+                        <p><v-icon size="55">mdi-account-circle</v-icon> Magnus</p><br>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in opponentCards" :key="index" :card-data="card"
                                 :hide-card="index === 0 && hideOpponentFirstCard" />
