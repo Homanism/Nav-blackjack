@@ -4,7 +4,7 @@
             <v-img alt="Game Logo" class="shrink mr-2" contain src="../assets/blackjack-logo.png"
                 transition="scale-transition" width="40" />
 
-            <h2>Velkommen til Homan BlackJack!</h2>
+            <h2>Welcome to BlackJack Game</h2>
 
             <div class="ml-10 d-flex">
                 <div>
@@ -16,6 +16,15 @@
                     </v-chip>
                 </div>
 
+                <div>
+                    <v-chip label :disabled="isMyTurn" class="ma-2" color="orange" text-color="white">
+                        <v-icon left>
+                            mdi-account-circle-outline
+                        </v-icon>
+
+                        Magnus's turn
+                    </v-chip>
+                </div>
             </div>
         </div>
     </v-app-bar>
