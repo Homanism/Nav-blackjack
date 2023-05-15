@@ -55,5 +55,63 @@ export default {
 </script>
 
 <style>
+.container {
+    width: 80%;
+    border: 1px solid lightblue;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.container .winner-text {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .winner-text .winner-text-wrapper {
+    width: 50%;
+    text-align: center;
+}
+
+.container .winner-text .winner-text-wrapper span {
+    font-weight: bold;
+    font-size: 22px;
+    color: green;
+}
+
+.container .participants {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .participants .participant-wrapper {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .participants .participant-wrapper span {
+    font-size: 18px;
+    color: blue;
+}
+
+.container .participants .participant-wrapper .participant-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.blackjack {
+    font-weight: bold;
+    font-size: 32px;
+    margin-top: 32px;
+    color: green;
+    display: flex;
+    align-items: center;
+}
 </style>
