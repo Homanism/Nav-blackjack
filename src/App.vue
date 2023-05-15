@@ -2,24 +2,31 @@
     <v-app>
         <AppBar :is-my-turn="isMyTurn" :my-score="myScore" :opponent-score="opponentScore" />
 
-        <v-main class="mt-5">
+        <v-main class="mt-9">
             <div v-if="!winner">
                 <div class="game-proccess">
                     <div class="game-proccess-block">
-                        <div class="score">Score: {{ myScore }}</div>
-                        <h2>You</h2>
+                        <p>You</p><br><br>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in myCards" :key="index" :card-data="card" />
                         </div>
                     </div>
                     <v-divider vertical></v-divider>
                     <div class="game-proccess-block">
-                        <div class="score">Score: {{ opponentScore }}</div>
-                        <h2>Magnus</h2>
+                        <p>Magnus</p><br>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in opponentCards" :key="index" :card-data="card"
                                 :hide-card="index === 0 && hideOpponentFirstCard" />
                         </div>
+                    </div>
+                </div>
+                <div class="game-proccess">
+                    <div class="game-proccess-block">
+                        <h1 >Din score: {{ myScore }}</h1><br><br><br>
+                    </div>
+                    <v-divider vertical></v-divider>
+                    <div class="game-proccess-block">
+                        <h1 >Magnus score: {{ opponentScore }}</h1><br><br><br>
                     </div>
                 </div>
                 <div class="game-control-btns" v-if="myCards.length > 0">
@@ -211,6 +218,20 @@ export default {
 body {
     font-family: sans-serif;
 }
+p{
+    color:white;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+#app {
+  background: url('https://www.shutterstock.com/image-vector/black-jack-table-background-green-260nw-1937358541.jpg')
+  /* background: url('@/assets/bj.jpg') */
+    no-repeat center center ;
+  background-size: cover;
+   /* Full height */
+   /* height: 100%; */
+}
 
 .game-control-btns {
     width: 80%;
@@ -221,9 +242,9 @@ body {
 
 .game-proccess {
     width: 80%;
-    min-height: 200px;
+    min-height: 300px;
     margin: 40px auto;
-    border: 1px solid lightblue;
+    /* border: 1px solid lightblue; */
     border-radius: 10px;
     display: flex;
 }
@@ -242,9 +263,10 @@ body {
     left: 50%;
     transform: translateX(-50%);
     top: -36px;
-    font-weight: normal;
-    color: black;
-    font-size: 24px;
+    font-weight: bold;
+    color: rgb(196, 16, 16);
+    font-size: 30px;
+    min-height: 120px;
 }
 
 .game-proccess .game-proccess-block .picked-cards {
