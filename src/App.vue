@@ -2,7 +2,6 @@
     <v-app>
         <AppBar :is-my-turn="isMyTurn" :my-score="myScore" :opponent-score="opponentScore" />
 
-
         <v-main class="mt-5">
             <div v-if="!winner">
                 <div class="game-proccess">
@@ -15,8 +14,6 @@
                     </div>
                     <v-divider vertical></v-divider>
                     <div class="game-proccess-block">
-
-
                         <div class="score">Score: {{ opponentScore }}</div>
                         <h2>Magnus</h2>
                         <div class="picked-cards">
@@ -29,8 +26,6 @@
                     <v-btn color="info" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
                     <v-btn color="info" class="ml-2" @click="stay">Stay</v-btn>
                 </div>
-
-
                 <div class="game-control-btns" v-else>
                     <v-btn color="orange" depressed dark @click="hit">Deal</v-btn>
                 </div>
@@ -38,8 +33,6 @@
             <GameResult v-if="winner" :winner="winner" :is-blackjack="isBlackjack" :myCards="myCards"
                 :opponentCards="opponentCards" :myScore="myScore" :opponentScore="opponentScore"
                 @startNewRound="setNewRound" />
-
-                
         </v-main>
 
         <v-dialog v-model="drawDialog" max-width="290">
@@ -113,7 +106,13 @@ export default {
                 this.myScore += this.deckOfCards[0].score;
                 this.deckOfCards.shift();
             }
-
+            for (let i = 0; i < 2; i++) {
+                this.opponentCards.push(this.deckOfCards[0]);
+                if (i !== 0) {
+                    this.opponentScore += this.deckOfCards[0].score;
+                }
+                this.deckOfCards.shift();
+            }
 
             this.findWinner();
         },
@@ -137,7 +136,15 @@ export default {
             this.hideOpponentFirstCard = false;
             this.findWinner();
             this.drawDialog = this.isDraw;
-
+            if (!this.winner && !this.isDraw) {
+                do {
+                    this.opponentCards.push(this.deckOfCards[0]);
+                    this.opponentScore += this.deckOfCards[0].score;
+                    this.deckOfCards.shift();
+                    this.findWinner();
+                } while (this.opponentScore <= this.myScore && this.winner === null);
+                this.isMyTurn = true;
+            }
         },
 
         setNewRound() {
@@ -212,4 +219,37 @@ body {
     justify-content: start;
 }
 
+.game-proccess {
+    width: 80%;
+    min-height: 200px;
+    margin: 40px auto;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+    display: flex;
+}
+
+.game-proccess .game-proccess-block {
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.game-proccess .game-proccess-block .score {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -36px;
+    font-weight: normal;
+    color: black;
+    font-size: 24px;
+}
+
+.game-proccess .game-proccess-block .picked-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start !important;
+}
 </style>
