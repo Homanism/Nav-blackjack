@@ -66,7 +66,35 @@ export default {
 
     methods: {
         setDeck() {
+            const randomDeck = shuffleDeckRandomly();
+            this.setNewRound();
 
+            randomDeck.forEach(card => {
+                if (card.value === "J" || card.value === "Q" || card.value === "K") {
+                    this.deckOfCards.push({ ...card, score: 10 })
+                }
+                else if (card.value === "A") {
+                    this.deckOfCards.push({ ...card, score: 11 })
+                }
+                else {
+                    this.deckOfCards.push({ ...card, score: Number(card.value) })
+                }
+            });
+
+            for (let i = 0; i < 2; i++) {
+                this.myCards.push(this.deckOfCards[0]);
+                this.myScore += this.deckOfCards[0].score;
+                this.deckOfCards.shift();
+            }
+            for (let i = 0; i < 2; i++) {
+                this.opponentCards.push(this.deckOfCards[0]);
+                if (i !== 0) {
+                    this.opponentScore += this.deckOfCards[0].score;
+                }
+                this.deckOfCards.shift();
+            }
+
+            this.findWinner();
         },
 
         hit() {
