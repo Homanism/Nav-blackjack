@@ -1,18 +1,24 @@
 <template>
     <v-app>
         <AppBar :is-my-turn="isMyTurn" :my-score="myScore" :opponent-score="opponentScore" />
+
+
         <v-main class="mt-5">
             <div v-if="!winner">
                 <div class="game-proccess">
                     <div class="game-proccess-block">
+                        <div class="score">Score: {{ myScore }}</div>
+                        <h2>You</h2>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in myCards" :key="index" :card-data="card" />
                         </div>
                     </div>
-
+                    <v-divider vertical></v-divider>
                     <div class="game-proccess-block">
 
-            
+
+                        <div class="score">Score: {{ opponentScore }}</div>
+                        <h2>Magnus</h2>
                         <div class="picked-cards">
                             <GameCard v-for="(card, index) in opponentCards" :key="index" :card-data="card"
                                 :hide-card="index === 0 && hideOpponentFirstCard" />
@@ -23,6 +29,8 @@
                     <v-btn color="info" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
                     <v-btn color="info" class="ml-2" @click="stay">Stay</v-btn>
                 </div>
+
+
                 <div class="game-control-btns" v-else>
                     <v-btn color="orange" depressed dark @click="hit">Deal</v-btn>
                 </div>
@@ -30,8 +38,27 @@
             <GameResult v-if="winner" :winner="winner" :is-blackjack="isBlackjack" :myCards="myCards"
                 :opponentCards="opponentCards" :myScore="myScore" :opponentScore="opponentScore"
                 @startNewRound="setNewRound" />
+
+                
         </v-main>
 
+        <v-dialog v-model="drawDialog" max-width="290">
+            <v-card>
+                <v-card-title class="text-h5">
+                    Draw...
+                </v-card-title>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn color="green" dark depressed @click="closeDrawDialog">
+                        New Round
+                    </v-btn>
+
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-app>
 </template>
 
@@ -69,18 +96,24 @@ export default {
             const randomDeck = shuffleDeckRandomly();
             this.setNewRound();
 
+            randomDeck.forEach(card => {
+                if (card.value === "J" || card.value === "Q" || card.value === "K") {
+                    this.deckOfCards.push({ ...card, score: 10 })
+                }
+                else if (card.value === "A") {
+                    this.deckOfCards.push({ ...card, score: 11 })
+                }
+                else {
+                    this.deckOfCards.push({ ...card, score: Number(card.value) })
+                }
+            });
+
             for (let i = 0; i < 2; i++) {
                 this.myCards.push(this.deckOfCards[0]);
                 this.myScore += this.deckOfCards[0].score;
                 this.deckOfCards.shift();
             }
-            for (let i = 0; i < 2; i++) {
-                this.opponentCards.push(this.deckOfCards[0]);
-                if (i !== 0) {
-                    this.opponentScore += this.deckOfCards[0].score;
-                }
-                this.deckOfCards.shift();
-            }
+
 
             this.findWinner();
         },
@@ -104,15 +137,7 @@ export default {
             this.hideOpponentFirstCard = false;
             this.findWinner();
             this.drawDialog = this.isDraw;
-            if (!this.winner && !this.isDraw) {
-                do {
-                    this.opponentCards.push(this.deckOfCards[0]);
-                    this.opponentScore += this.deckOfCards[0].score;
-                    this.deckOfCards.shift();
-                    this.findWinner();
-                } while (this.opponentScore <= this.myScore && this.winner === null);
-                this.isMyTurn = true;
-            }
+
         },
 
         setNewRound() {
@@ -146,7 +171,10 @@ export default {
             }
         },
 
-
+        closeDrawDialog() {
+            this.setNewRound();
+            this.drawDialog = false;
+        }
     },
 
     async mounted() {
@@ -173,5 +201,15 @@ export default {
 </script>
 
 <style>
+body {
+    font-family: sans-serif;
+}
+
+.game-control-btns {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: start;
+}
 
 </style>
