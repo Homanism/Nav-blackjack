@@ -205,13 +205,16 @@ export default {
         closeDrawDialog() {
             this.setNewRound();
             this.drawDialog = false;
-        }
-    },
+        },
 
-    async mounted() {
-        const response = await axios.get("https://blackjack.ekstern.dev.nav.no/shuffle");
-        this.shuf= response.data
-        console.log(response)
+        async shuffleDeckRandomly (){
+            const response = await axios.get(this.endpoint);
+            return response.data;
+        },
+
+        setNewEndpoint() {
+            this.lastPartOfAPI = this.lastPartOfAPIInputValue;
+        }
     },
 
     computed: {
@@ -219,6 +222,10 @@ export default {
             return this.myScore > 16 && this.myScore < 21
                 && this.opponentScore > 16 && this.opponentScore < 21
                 && this.opponentScore === this.myScore;
+        },
+
+        endpoint() {
+            return this.api + this.lastPartOfAPI;
         }
     },
 
