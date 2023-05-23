@@ -3,6 +3,7 @@
         <AppBar :is-my-turn="isMyTurn" :my-score="myScore" :opponent-score="opponentScore" />
 
         <v-main class="mt-9">
+            
             <div v-if="!winner">
                 <div class="game-proccess">
                     <div class="game-proccess-block">
@@ -26,6 +27,7 @@
                     <v-btn color="red" @click="hit" :disabled="!isMyTurn">Hit</v-btn>
                     <v-btn color="red" class="ml-2" @click="stay">Stay</v-btn>
                 </div>
+                
                 <div class="game-control-btns" v-else>
                     <v-btn color="red" depressed dark @click="hit">Deal</v-btn>
                 </div>
@@ -33,11 +35,19 @@
                     <div class="game-proccess-block">
                         <h1 >Din score: {{ myScore }}</h1><br><br><br>
                     </div>
+                    <div style="width: 80%; margin: 0 auto;">
+                <h5>Current API: <italic>{{ endpoint }}</italic></h5>
+                <v-text-field class="mt-2" label="Endpoint" placeholder="Endpoint" v-model="lastPartOfAPIInputValue" outlined dense
+                    style="max-width: 350px;"></v-text-field>
+                <v-btn color="primary" @click="setNewEndpoint">OK</v-btn>
+            </div>
                     <v-divider vertical></v-divider>
                     <div class="game-proccess-block">
                         <h1 >Magnus score: {{ opponentScore }}</h1><br><br><br>
                     </div>
+                    
                 </div>
+
 
             </div>
             <GameResult v-if="winner" :winner="winner" :is-blackjack="isBlackjack" :myCards="myCards"
