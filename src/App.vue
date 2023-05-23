@@ -101,7 +101,11 @@ export default {
         hideOpponentFirstCard: true,
         drawDialog: false,
         isBlackjack: false,
-        shuf: {}
+        shuf: {},
+        isLoading: false,
+        lastPartOfAPI: "shuffle",
+        lastPartOfAPIInputValue: "",
+        api: "https://blackjack.ekstern.dev.nav.no/"
     }),
 
     methods: {
