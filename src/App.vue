@@ -109,8 +109,11 @@ export default {
     }),
 
     methods: {
-        setDeck() {
-            const randomDeck = this.shuf
+        async setDeck() {
+            this.isLoading = true
+            const randomDeck = await this.shuffleDeckRandomly();
+            this.isLoading = false
+
             this.setNewRound();
 
             randomDeck.forEach(card => {
